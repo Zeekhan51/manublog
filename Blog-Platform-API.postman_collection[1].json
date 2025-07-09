@@ -1,0 +1,589 @@
+{
+  "info": {
+    "name": "Blog Platform API",
+    "description": "Complete API documentation for the Blog Platform - WordPress-like CMS",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@blog.com\",\n  \"password\": \"admin123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Get All Posts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/posts?page=1&limit=10&status=PUBLISHED",
+              "host": ["{{base_url}}"],
+              "path": ["api", "posts"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "PUBLISHED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post by Slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/posts/my-first-post",
+              "host": ["{{base_url}}"],
+              "path": ["api", "posts", "my-first-post"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"My New Blog Post\",\n  \"content\": \"<p>This is the content of my blog post with <strong>HTML formatting</strong>.</p>\",\n  \"excerpt\": \"A brief summary of the post\",\n  \"status\": \"DRAFT\",\n  \"categoryId\": \"1\",\n  \"tags\": [\"technology\", \"web-development\"],\n  \"metaTitle\": \"My New Blog Post - SEO Title\",\n  \"metaDescription\": \"This is the meta description for SEO purposes\",\n  \"featuredImage\": \"/uploads/featured-image.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/posts",
+              "host": ["{{base_url}}"],
+              "path": ["api", "posts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Post",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Blog Post Title\",\n  \"content\": \"<p>Updated content with new information.</p>\",\n  \"status\": \"PUBLISHED\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "posts", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/posts/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "posts", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/posts/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "posts", "stats"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Media",
+      "item": [
+        {
+          "name": "Upload File",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "alt",
+                  "value": "Alternative text for the image",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media", "upload"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Media Library",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/media?page=1&limit=20&type=image",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "type",
+                  "value": "image"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Media",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alt\": \"Updated alternative text\",\n  \"caption\": \"Image caption\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Media",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/media/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "Get Comments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/comments?postId=1&status=APPROVED",
+              "host": ["{{base_url}}"],
+              "path": ["api", "comments"],
+              "query": [
+                {
+                  "key": "postId",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "APPROVED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postId\": \"1\",\n  \"content\": \"This is a great blog post!\",\n  \"authorName\": \"John Doe\",\n  \"authorEmail\": \"john@example.com\",\n  \"authorWebsite\": \"https://johndoe.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/comments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "comments"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Moderate Comment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"APPROVED\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/comments/1/moderate",
+              "host": ["{{base_url}}"],
+              "path": ["api", "comments", "1", "moderate"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SEO",
+      "item": [
+        {
+          "name": "Analyze Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"How to Build a Blog Platform\",\n  \"content\": \"<p>Building a blog platform requires careful planning and modern web technologies...</p>\",\n  \"metaDescription\": \"Learn how to build a modern blog platform with Next.js and Node.js\",\n  \"slug\": \"how-to-build-blog-platform\",\n  \"focusKeyword\": \"blog platform\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seo/analyze",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seo", "analyze"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Slug",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"How to Build a Modern Blog Platform with Next.js\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seo/generate-slug",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seo", "generate-slug"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Preview Meta Tags",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"How to Build a Blog Platform\",\n  \"metaDescription\": \"Learn how to build a modern blog platform with Next.js and Node.js\",\n  \"featuredImage\": \"/uploads/blog-platform-tutorial.jpg\",\n  \"url\": \"https://yourblog.com/how-to-build-blog-platform\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seo/meta-preview",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seo", "meta-preview"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Backup",
+      "item": [
+        {
+          "name": "Create Backup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"includes\": {\n    \"posts\": true,\n    \"media\": true,\n    \"settings\": true,\n    \"users\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/backup/create",
+              "host": ["{{base_url}}"],
+              "path": ["api", "backup", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Backups",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/backup/list",
+              "host": ["{{base_url}}"],
+              "path": ["api", "backup", "list"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Download Backup",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/backup/download/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "backup", "download", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Backup",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/backup/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "backup", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/analytics/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "dashboard"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Track Page View",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postId\": \"1\",\n  \"userAgent\": \"Mozilla/5.0...\",\n  \"ipAddress\": \"192.168.1.1\",\n  \"referrer\": \"https://google.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/analytics/track",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "track"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Public Routes",
+      "item": [
+        {
+          "name": "Get Sitemap",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sitemap.xml",
+              "host": ["{{base_url}}"],
+              "path": ["sitemap.xml"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get RSS Feed",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/rss/feed.xml",
+              "host": ["{{base_url}}"],
+              "path": ["rss", "feed.xml"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
+
